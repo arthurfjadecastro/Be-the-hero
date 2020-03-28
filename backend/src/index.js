@@ -1,7 +1,17 @@
 const express = require("express");
-const routes = requite("./routes");
+const routes = require("./routes");
+const cors = require("cors");
 
 const app = express();
+
+//Example to production
+// app.use(
+//   cors({
+//     origin: "https://tribunagamer.com"
+//   })
+// );
+
+app.use(cors());
 
 app.use(express.json());
 
