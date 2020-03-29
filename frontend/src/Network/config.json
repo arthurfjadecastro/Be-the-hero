@@ -5,6 +5,7 @@
   },
   "Incidents": {
     "urlIncidents": "incidentsbyong",
-    "urlDeleteIncident": "incidents/"
+    "urlDeleteIncident": "incidents/",
+    "urlCreateIncident": "incidents"
   }
 }

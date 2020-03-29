@@ -3,49 +3,34 @@ import logoImg from "../assets/logo.svg";
 import { Link, useHistory } from "react-router-dom";
 import IndexRouter from "../IndexRouter/indexRouter";
 import { FiPower, FiTrash2 } from "react-icons/fi";
-import adminService from "../Network/AdminService/httpService";
-import { ResponseError } from "../Hooks";
-// import useIncidents from "./useIncidents";
+import useIncidents from "./useIncidents";
+import useDeleteIncident from "./useDeleteIncident";
+import { useDelayedEffect, useIf } from "../Hooks";
+import { toast } from "react-toastify";
 import "./style.css";
 
 const Incident = () => {
   const ongName = localStorage.getItem("ongName");
   const history = useHistory();
-  const [incidents, setIncidents] = useState([]);
+  // const [incidents, setIncidents] = useState([]);
+  const [incidents, incidentsError] = useIncidents();
+  const [incidentsAfterDelete, setIncidentsAfterDelete] = useState([]);
+  const [deleteIncident, [response, error]] = useDeleteIncident();
 
-  useEffect(async () => {
-    const response = await adminService.getIncidents();
-    if (response.status !== 200) {
-      throw new ResponseError(
-        `Erro ao obter os indcidentes: ${response.status}`
-      );
-    }
+  useDelayedEffect(() => {
+    setIncidentsAfterDelete(incidents);
+  }, [incidents]);
 
-    setIncidents(response.data);
-  }, []);
-
-  const handleDeleteIncident = async id => {
-    try {
-      // await adminService.deleteIncident(id);
-      // if (clinicDeleted) {
-      //   setIncidents(incidents.filter(incident => incident.id !== id));
-      // }
-    } catch (err) {
-      alert("Erro ao deletar caso, tenta novamente");
-    }
+  const handleDeleteIncident = id => {
+    const foo = incidentsAfterDelete.filter(incident => incident.id !== id);
+    setIncidentsAfterDelete(foo);
+    deleteIncident(id);
   };
 
   const handleLogout = () => {
     localStorage.clear();
-    // return <Link to="/" />;
-    history.push(IndexRouter.incident);
+    history.push(IndexRouter.logon);
   };
-
-  // const [incidents, incidentsError] = useIncidents();
-
-  // if (incidents !== null) {
-  //   console.log(incidents);
-  // }
 
   return (
     <>
@@ -64,7 +49,7 @@ const Incident = () => {
 
         <h1>Casos cadastrados</h1>
         <ul>
-          {incidents.map(incident => {
+          {incidentsAfterDelete.map(incident => {
             return (
               <li key={incident.id}>
                 <strong>CASO:</strong>
@@ -78,7 +63,7 @@ const Incident = () => {
                   }).format(2500)}
                 </p>
                 <button
-                  // onClick={handleDeleteIncident(incident.id)}
+                  onClick={() => handleDeleteIncident(incident.id)}
                   type="button"
                 >
                   <FiTrash2 size={20} color="#a8a8b3" />

@@ -10,7 +10,6 @@ const useRequest = (requestFunction, requestBody) => {
       setError(null);
       return;
     }
-
     requestFunction &&
       requestFunction(requestBody)
         .then(response => setResult(response))

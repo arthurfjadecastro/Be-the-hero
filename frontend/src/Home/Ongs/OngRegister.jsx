@@ -19,10 +19,10 @@ const OngRegister = () => {
   //create ong access
   const [postOng, [createOng, ongCreateError]] = useCreateOng({ ...state });
 
-  const handleRegister = async e => {
+  const handleRegister = e => {
     e.preventDefault();
     postOng();
-    alert("Cadastrado com sucesso");
+
     history.push(IndexRouter.logon);
   };
 

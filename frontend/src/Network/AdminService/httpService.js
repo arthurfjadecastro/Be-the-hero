@@ -15,6 +15,16 @@ const createSession = ong => {
 };
 
 //Incidents
+const createIncident = incident => {
+  const ongId = localStorage.getItem("ongId");
+
+  return api.post(Incidents.urlCreateIncident, incident, {
+    headers: {
+      Authorization: ongId
+    }
+  });
+};
+
 const getIncidents = () => {
   const ongId = localStorage.getItem("ongId");
 
@@ -39,5 +49,6 @@ export default {
   createOng,
   createSession,
   getIncidents,
-  deleteIncident
+  deleteIncident,
+  createIncident
 };
