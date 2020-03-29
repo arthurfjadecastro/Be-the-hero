@@ -1,0 +1,3 @@
+const SET_ONG_FIELDS = "SET_ONG_FIELDS";
+
+export { SET_ONG_FIELDS };

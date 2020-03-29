@@ -1,0 +1,10 @@
+{
+  "Ongs": {
+    "urlOngs": "ongs",
+    "urlSession": "sessions"
+  },
+  "Incidents": {
+    "urlIncidents": "incidentsbyong",
+    "urlDeleteIncident": "incidents/"
+  }
+}
